@@ -1,8 +1,9 @@
 import request from 'request'
 
 class FBMessenger {
-  constructor (token, notificationType) {
+  constructor (token, secret, notificationType) {
     this.token = token
+    this.appsecret_proof = appsecret_proof
     this.notificationType = notificationType || 'REGULAR'
   }
 
@@ -121,7 +122,10 @@ class FBMessenger {
 
     const req = {
       url: 'https://graph.facebook.com/v2.6/me/messages',
-      qs: {access_token: this.token},
+      qs: {
+        access_token: this.token,
+        appsecret_proof: this.appsecret_proof
+      },
       method: 'POST',
       json: json
     }
@@ -134,7 +138,8 @@ class FBMessenger {
       uri: `https://graph.facebook.com/v2.6/${id}`,
       qs: {
         fields: 'first_name,last_name,profile_pic,locale,timezone,gender',
-        access_token: this.token
+        access_token: this.token,
+        appsecret_proof: this.appsecret_proof
       },
       json: true
     }
@@ -197,7 +202,8 @@ class FBMessenger {
       method: 'POST',
       uri: `https://graph.facebook.com/v2.6/${pageId}/thread_settings`,
       qs: {
-        access_token: this.token
+        access_token: this.token,
+        appsecret_proof: this.appsecret_proof
       },
       json: jsonObject
     }
